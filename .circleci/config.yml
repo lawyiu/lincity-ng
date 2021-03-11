@@ -8,6 +8,7 @@ jobs:
 
     steps:
       - checkout
+      - run: ./autoconf.sh
       - run: ./configure
       - run: jam
 
@@ -17,4 +18,4 @@ workflows:
       - build:
           pre-steps:
             - run: sudo apt update
-            - run: sudo apt install -y libxml2-dev libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libphysfs-dev
+            - run: sudo apt install jam libxml2-dev libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libphysfs-dev
