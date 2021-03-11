@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - checkout
-      - run: ./autoconf.sh
+      - run: ./autogen.sh
       - run: ./configure
       - run: jam
 
