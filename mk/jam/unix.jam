@@ -6,6 +6,8 @@ SHELL ?= "/bin/sh" ;
 #----------------------------------------------------------------------------
 # platform specific rules
 
+AR = "ar rc" ;
+
 ##  ConstructApplicationTarget target : options
 ##    Constructs the application atrget name (ie. foo.exe for foo)
 rule ConstructApplicationTarget
