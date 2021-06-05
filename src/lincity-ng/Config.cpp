@@ -44,7 +44,11 @@ Config::Config()
     assert(configPtr == 0);
 
     //Default Values
-    useOpenGL = true;  //OpenGL is often way too slow
+#ifdef EMSCRIPTEN
+    useOpenGL = false;
+#else
+    useOpenGL = true;
+#endif
     useFullScreen = true;
     videoX = 1024;
     videoY = 768;
