@@ -473,7 +473,11 @@ int main(int argc, char** argv)
     try {
 #endif
         xmlInitParser ();
+#ifdef EMSCRIPTEN
+        if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0) {
+#else
         if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+#endif
             std::stringstream msg;
             msg << "Couldn't initialize SDL: " << SDL_GetError();
             throw std::runtime_error(msg.str());
