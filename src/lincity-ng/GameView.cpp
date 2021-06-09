@@ -88,8 +88,10 @@ GameView::GameView()
 
 GameView::~GameView()
 {
+#ifndef EMSCRIPTEN
     stopThread = true;
     SDL_WaitThread( loaderThread, NULL );
+#endif
     if(gameViewPtr == this)
     {   gameViewPtr = 0;}
 }
@@ -100,9 +102,11 @@ int GameView::gameViewThread( void* data )
     GameView* gv = (GameView*) data;
     gv->preReadImages();
     gv->textures_ready = true;
+#ifndef EMSCRIPTEN
     //keep thread alive as long as there are SDL_Surfaces
     while(!gv->stopThread && gv->remaining_images!=0)
     {   SDL_Delay(100);}
+#endif
     return 0;
 }
 
@@ -126,8 +130,12 @@ void GameView::parse(XmlReader& reader)
     blankGraphicsInfo.x = blankGraphicsInfo.texture->getWidth() / 2;
     blankGraphicsInfo.y = blankGraphicsInfo.texture->getHeight();
 
+#ifdef EMSCRIPTEN
+    gameViewThread(this);
+#else
     stopThread = false;
     loaderThread = SDL_CreateThread( gameViewThread, "Loader", this );
+#endif
 
     //GameView is resizable
     setFlags(FLAG_RESIZABLE);
