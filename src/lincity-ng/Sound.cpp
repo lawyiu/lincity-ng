@@ -298,7 +298,11 @@ Sound::Sound()
         return;
     } else {
         audioOpen = true;
+#ifdef EMSCRIPTEN
+        soundThread(this);
+#else
         loaderThread = SDL_CreateThread(soundThread, "Sound", this);
+#endif
     }
 
     setMusicVolume(getConfig()->musicVolume);
@@ -320,8 +324,9 @@ Sound::Sound()
 
 Sound::~Sound()
 {
-    //SDL_KillThread( loaderThread );
+#ifndef EMSCRIPTEN
     SDL_WaitThread( loaderThread, NULL );
+#endif
     if(currentMusic)
         Mix_FreeMusic(currentMusic);
 
