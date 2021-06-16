@@ -46,10 +46,13 @@ Config::Config()
     //Default Values
 #ifdef EMSCRIPTEN
     useOpenGL = false;
+    useFullScreen = false;
+    restartOnChangeScreen = false;
 #else
     useOpenGL = true;
-#endif
     useFullScreen = true;
+    restartOnChangeScreen = true;
+#endif
     videoX = 1024;
     videoY = 768;
 
@@ -58,7 +61,6 @@ Config::Config()
     soundEnabled = true;
     musicEnabled = true;
     carsEnabled = true;
-    restartOnChangeScreen = true;
 
     //#define MONTHGRAPH_W 120
     //#define MONTHGRAPH_H 64
