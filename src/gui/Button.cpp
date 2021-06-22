@@ -275,6 +275,10 @@ Button::~Button()
 void
 Button::event(const Event& event)
 {
+    if (state == STATE_HIDDEN) {
+        return;
+    }
+
     State oldState = state;
     switch(event.type) {
         case Event::MOUSEMOTION:
@@ -329,6 +333,10 @@ Button::event(const Event& event)
 void
 Button::draw(Painter& painter)
 {
+    if (state == STATE_HIDDEN) {
+        return;
+    }
+
     switch(state) {
         case STATE_CLICKED:
             if(comp_clicked().isEnabled()) {

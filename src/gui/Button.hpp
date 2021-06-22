@@ -53,6 +53,9 @@ public:
     void event(const Event& event);
     void reLayout();
     
+    void hide() { state = STATE_HIDDEN; }
+    void show() { state = STATE_NORMAL; }
+
     void setCaptionText(const std::string &pText);
     std::string getCaptionText();
 
@@ -63,7 +66,8 @@ public:
     enum State {
         STATE_NORMAL,
         STATE_HOVER,
-        STATE_CLICKED
+        STATE_CLICKED,
+        STATE_HIDDEN
     };
     
     State state;
