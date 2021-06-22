@@ -81,6 +81,9 @@ MainMenu::loadMainMenu()
         Button* quitButton = getButton(*mainMenu, "QuitButton");
         quitButton->clicked.connect(
                 makeCallback(*this, &MainMenu::quitButtonClicked));
+#ifdef EMSCRIPTEN
+        quitButton->hide();
+#endif
         Button* continueButton = getButton(*mainMenu, "ContinueButton");
         continueButton->clicked.connect(
                 makeCallback(*this, &MainMenu::continueButtonClicked));
