@@ -44,7 +44,7 @@ public:
     virtual ~Painter()
     { }
 
-    virtual void drawTexture(const Texture* texture, const Vector2& pos) = 0;
+    virtual void drawTexture(Texture* texture, const Vector2& pos) = 0;
     virtual void drawStretchTexture(Texture* texture, const Rect2D& rect) = 0;
     virtual void fillRectangle(const Rect2D& rect) = 0;
     virtual void drawRectangle(const Rect2D& rect) = 0;

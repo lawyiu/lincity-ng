@@ -21,13 +21,50 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 TextureSDL::~TextureSDL()
 {
+    destroyTexturesMap(textures);
     SDL_FreeSurface(surface);
 
     if(zoomSurface)
     {
+        destroyTexturesMap(zoomTextures);
         SDL_FreeSurface(zoomSurface);
-        zoomSurface = NULL;
     }
+}
+
+SDL_Texture* TextureSDL::getTexture(SDL_Renderer* renderer)
+{
+    SDL_Texture* tex;
+    auto texIter = textures.find(renderer);
+
+    if(texIter == textures.end())
+    {
+        tex = SDL_CreateTextureFromSurface(renderer, surface);
+        textures[renderer] = tex;
+    }
+    else
+    {
+        tex = (*texIter).second;
+    }
+
+    return tex;
+}
+
+SDL_Texture* TextureSDL::getZoomTexture(SDL_Renderer* renderer, double zx, double zy)
+{
+    SDL_Texture* zoomTex;
+    auto texIter = zoomTextures.find(renderer);
+
+    if(texIter == zoomTextures.end())
+    {
+        zoomTex = SDL_CreateTextureFromSurface(renderer, zoomSurface);
+        zoomTextures[renderer] = zoomTex;
+    }
+    else
+    {
+        zoomTex = (*texIter).second;
+    }
+
+    return zoomTex;
 }
 
 /** @file gui/PainterSDL/TextureSDL.cpp */

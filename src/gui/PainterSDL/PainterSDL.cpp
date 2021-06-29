@@ -58,10 +58,10 @@ PainterSDL::~PainterSDL()
 //This function draw a tile with zoom = 1
 //i.e. with no transformation, so it is as fast as possible
 void
-PainterSDL::drawTexture(const Texture* texture, const Vector2& pos)
+PainterSDL::drawTexture(Texture* texture, const Vector2& pos)
 {
     assert(typeid(*texture) == typeid(TextureSDL));
-    const TextureSDL* textureSDL = static_cast<const TextureSDL*> (texture);
+    TextureSDL* textureSDL = static_cast<TextureSDL*> (texture);
 
 #ifdef DEBUG_ALL
     if(texture == 0) {
@@ -79,9 +79,8 @@ PainterSDL::drawTexture(const Texture* texture, const Vector2& pos)
     drect.w = texture->getWidth();
     drect.h = texture->getHeight();
 
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, textureSDL->surface);
+    SDL_Texture* tex = textureSDL->getTexture(renderer);
     SDL_RenderCopy(renderer, tex, NULL, &drect);
-    SDL_DestroyTexture(tex);
 }
 
 //RectIntersection checks to see if two SDL_Rects intersect each other
@@ -164,9 +163,8 @@ PainterSDL::drawStretchTexture(Texture* texture, const Rect2D& rect)
     }
 
     // note: textures should be cached per zoom/renderer/surface combination
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, textureSDL->zoomSurface);
+    SDL_Texture* tex = textureSDL->getZoomTexture(renderer, zoomx, zoomy);
     SDL_RenderCopy(renderer, tex, NULL, &drect);
-    SDL_DestroyTexture(tex);
 
 /*
     //This was the original code that would zoom a surface, blit it, and then free it.

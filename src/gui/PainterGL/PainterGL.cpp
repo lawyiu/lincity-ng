@@ -61,7 +61,7 @@ PainterGL::drawTextureRect(const Texture* texture, const Rect2D& rect)
     glEnd();
 }
 void
-PainterGL::drawTexture(const Texture* texture, const Vector2& pos)
+PainterGL::drawTexture(Texture* texture, const Vector2& pos)
 {
     Rect2D rect(pos, pos + Vector2(texture->getWidth(), texture->getHeight()));
     drawTextureRect(texture, rect);

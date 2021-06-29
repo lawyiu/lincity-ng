@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "gui/Texture.hpp"
 #include <SDL.h>
+#include <map>
 
 /**
  * Wrapper around a pixmap. Texture have to be created by the TextureManager
@@ -42,12 +43,20 @@ public:
     void setZoomSurface(SDL_Surface* zs, double zx, double zy)
     {
         if(zoomSurface != NULL)
+        {
+            destroyTexturesMap(zoomTextures);
             SDL_FreeSurface(zoomSurface);
+            zoomSurface = NULL;
+        }
 
         zoomSurface = zs;
         zoomx = zx;
         zoomy = zy;
     }
+
+    SDL_Texture* getTexture(SDL_Renderer* renderer);
+    SDL_Texture* getZoomTexture(SDL_Renderer* renderer, double zx, double zy);
+
 private:
     friend class PainterSDL;
     friend class TextureManagerSDL;
@@ -57,8 +66,20 @@ private:
         zoomSurface = NULL;
     }
 
+    void destroyTexturesMap(std::map<SDL_Renderer*, SDL_Texture*>& texMap)
+    {
+        for (auto elm : texMap)
+        {
+            SDL_DestroyTexture(elm.second);
+        }
+
+        texMap.clear();
+    }
+
     SDL_Surface* surface;
+    std::map<SDL_Renderer*, SDL_Texture*> textures;
     SDL_Surface* zoomSurface;
+    std::map<SDL_Renderer*, SDL_Texture*> zoomTextures;
     double zoomx,zoomy;
 };
 
