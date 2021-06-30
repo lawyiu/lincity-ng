@@ -54,6 +54,7 @@ public:
         zoomy = zy;
     }
 
+    SDL_Texture* update(SDL_Renderer* renderer);
     SDL_Texture* getTexture(SDL_Renderer* renderer);
     SDL_Texture* getZoomTexture(SDL_Renderer* renderer, double zx, double zy);
 

@@ -31,6 +31,27 @@ TextureSDL::~TextureSDL()
     }
 }
 
+SDL_Texture* TextureSDL::update(SDL_Renderer* renderer)
+{
+    SDL_Texture* tex = getTexture(renderer);
+
+    // Need to check if texture format matches surface format or else the
+    // texture will look wrong when rendered.
+    Uint32 texFormat;
+    SDL_QueryTexture(tex, &texFormat, NULL, NULL, NULL);
+
+    if (surface->format->format != texFormat)
+    {
+        SDL_Surface* newSur = SDL_ConvertSurfaceFormat(surface, texFormat, 0);
+        SDL_FreeSurface(surface);
+        surface = newSur;
+    }
+
+    SDL_UpdateTexture(tex, NULL, surface->pixels, surface->pitch);
+
+    return tex;
+}
+
 SDL_Texture* TextureSDL::getTexture(SDL_Renderer* renderer)
 {
     SDL_Texture* tex;
