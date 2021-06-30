@@ -797,7 +797,7 @@ void MiniMap::draw(Painter &painter)
 //    mpainter->setLineColor( white );
 //    mpainter->drawPolygon( 4, gameViewPoints );
 
-    painter.drawTexture(mTexture.get(), Vector2(0, 0));
+    painter.drawTexture(mTexture.get(), Vector2(0, 0), false);
     mFullRefresh=false;
 }
 

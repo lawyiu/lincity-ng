@@ -58,7 +58,7 @@ PainterSDL::~PainterSDL()
 //This function draw a tile with zoom = 1
 //i.e. with no transformation, so it is as fast as possible
 void
-PainterSDL::drawTexture(Texture* texture, const Vector2& pos)
+PainterSDL::drawTexture(Texture* texture, const Vector2& pos, bool cached)
 {
     assert(typeid(*texture) == typeid(TextureSDL));
     TextureSDL* textureSDL = static_cast<TextureSDL*> (texture);
@@ -79,7 +79,17 @@ PainterSDL::drawTexture(Texture* texture, const Vector2& pos)
     drect.w = texture->getWidth();
     drect.h = texture->getHeight();
 
-    SDL_Texture* tex = textureSDL->getTexture(renderer);
+    SDL_Texture* tex;
+
+    if (!cached)
+    {
+        tex = textureSDL->update(renderer);
+    }
+    else
+    {
+        tex = textureSDL->getTexture(renderer);
+    }
+
     SDL_RenderCopy(renderer, tex, NULL, &drect);
 }
 

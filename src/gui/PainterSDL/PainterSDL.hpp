@@ -38,7 +38,14 @@ public:
     PainterSDL(SDL_Renderer* target);
     virtual ~PainterSDL();
 
-    void drawTexture(Texture* texture, const Vector2& pos);
+    /**
+     * cached = true means draw texture using cached texture. Useful for
+     * improving performance.
+     *
+     * cached = false means update or create new texture from surface stored
+     * inside Texture before drawing.
+     */
+    void drawTexture(Texture* texture, const Vector2& pos, bool cached = true);
     void drawStretchTexture(Texture* texture, const Rect2D& rect);
     void fillRectangle(const Rect2D& rect);
     void drawRectangle(const Rect2D& rect);

@@ -33,7 +33,8 @@ public:
     PainterGL(SDL_Window* _window);
     virtual ~PainterGL();
 
-    void drawTexture(Texture* texture, const Vector2& pos);
+    // cached parameter does nothing for OpenGL
+    void drawTexture(Texture* texture, const Vector2& pos, bool cached = true);
     void drawStretchTexture(Texture* texture, const Rect2D& rect);
     void fillRectangle(const Rect2D& rect);
     void drawRectangle(const Rect2D& rect);
